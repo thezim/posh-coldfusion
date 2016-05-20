@@ -10,8 +10,14 @@ $algorithm.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7
 $algorithm.BlockSize = 128
 $algorithm.KeySize = 128
 $algorithm.Key = $keybytes
+$iv = New-Object byte[] 16
+[Array]::Copy($encbytes, $iv, 16)
+$enclen = $encbytes.Length - 16
+$encnew = New-Object byte[] $enclen
+[Array]::Copy($encbytes, 16, $encnew, 0, $enclen)
+$algorithm.IV = $iv
 $decryptor = $algorithm.CreateDecryptor()
-$ms = New-Object System.IO.MemoryStream -ArgumentList @(,$encbytes)
+$ms = New-Object System.IO.MemoryStream -ArgumentList @(,$encnew)
 $cs = New-Object System.Security.Cryptography.CryptoStream($ms, $decryptor, "Read")
 $sr = New-Object System.IO.StreamReader($cs)
 $sr.ReadToEnd()
