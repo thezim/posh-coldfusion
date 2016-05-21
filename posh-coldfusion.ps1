@@ -36,7 +36,7 @@
     [Convert]::ToBase64String($bytes)
 }
 
-function Decrypt-CipherText {
+function Decrypt-Text {
     param(
         [parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
