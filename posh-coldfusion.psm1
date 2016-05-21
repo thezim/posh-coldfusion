@@ -1,4 +1,19 @@
-﻿function Encrypt-Text {
+﻿function Get-SeedInfo {
+    param(
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Path
+    )
+    $lines = Get-Content -Path "C:\Users\Greg\Desktop\seed.properties"
+    New-Object PSObject -Property @{
+    Seed = ($lines |
+        Where-Object { $_.StartsWith("seed") }) -split "=" | Select-Object -Last 1
+    Algorithm = ($lines |
+        Where-Object { $_.StartsWith("algorithm") }) -split "=" | Select-Object -Last 1
+    }
+}
+
+function Encrypt-Text {
     param(
         [parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
@@ -77,3 +92,4 @@ function Decrypt-Text {
     $sr = New-Object System.IO.StreamReader($cs)
     $sr.ReadToEnd()
 }
+Export-ModuleMember -Function Encrypt-Text, Decrypt-Text
