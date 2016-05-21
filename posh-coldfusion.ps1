@@ -1,6 +1,10 @@
 ﻿function Encrypt-Text {
     param(
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [string]$Text,
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [string]$Seed,
         [int]$BlockSize=128,
         [int]$KeySize=128
@@ -34,7 +38,11 @@
 
 function Decrypt-CipherText {
     param(
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [string]$Base64,
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [string]$Seed,
         [int]$BlockSize=128,
         [int]$KeySize=128
