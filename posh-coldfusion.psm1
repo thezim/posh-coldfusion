@@ -13,6 +13,32 @@
     }
 }
 
+function Get-DataSources {
+    param(
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Path
+    )
+    $content = Get-Content -Raw -Path $Path
+    $xdoc = New-Object System.Xml.XmlDocument
+    $xdoc.LoadXml($content)
+    $list = $xdoc.SelectNodes("//struct[var[@name='CLASS']]")
+    $data = @()
+    foreach($ds in $list){
+        $data += New-Object PSObject -Property @{
+            Name = $ds.ParentNode.name
+            Driver = ($ds.OuterXml | Select-Xml "/struct/var[@name='DRIVER']/string").Node.'#text'
+            Password =  ($ds.OuterXml | Select-Xml "/struct/var[@name='password']/string").Node.'#text'
+            Host = ($ds.OuterXml | Select-Xml -XPath "/struct/var[@name='urlmap']/struct/var[@name='host']/string").Node.'#text'
+            Port = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='port']/string").Node.'#text'
+            Database = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='database']/string").Node.'#text'
+            DatabaseFile = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='databaseFile']/string").Node.'#text'
+            SID = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='SID']/string").Node.'#text'
+        }
+    }
+    $data
+}
+
 function Encrypt-Text {
     param(
         [parameter(Mandatory=$true)]
@@ -92,4 +118,4 @@ function Decrypt-Text {
     $sr = New-Object System.IO.StreamReader($cs)
     $sr.ReadToEnd()
 }
-Export-ModuleMember -Function Encrypt-Text, Decrypt-Text
+Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources
