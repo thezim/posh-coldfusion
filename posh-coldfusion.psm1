@@ -27,6 +27,7 @@ function Get-DataSources {
     foreach($ds in $list){
         $data += New-Object PSObject -Property @{
             Name = $ds.ParentNode.name
+            Username = ($ds.OuterXml | Select-Xml "/struct/var[@name='username']/string").Node.'#text'
             Driver = ($ds.OuterXml | Select-Xml "/struct/var[@name='DRIVER']/string").Node.'#text'
             Password =  ($ds.OuterXml | Select-Xml "/struct/var[@name='password']/string").Node.'#text'
             Host = ($ds.OuterXml | Select-Xml -XPath "/struct/var[@name='urlmap']/struct/var[@name='host']/string").Node.'#text'
@@ -34,6 +35,7 @@ function Get-DataSources {
             Database = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='database']/string").Node.'#text'
             DatabaseFile = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='databaseFile']/string").Node.'#text'
             SID = ($ds.OuterXml | Select-Xml "/struct/var[@name='urlmap']/struct/var[@name='SID']/string").Node.'#text'
+            Url = ($ds.OuterXml | Select-Xml "/struct/var[@name='url']/string").Node.'#text'
         }
     }
     $data
