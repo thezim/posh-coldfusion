@@ -120,4 +120,4 @@ function Decrypt-Text {
     $sr = New-Object System.IO.StreamReader($cs)
     $sr.ReadToEnd()
 }
-Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources
+Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources, Get-SeedInfo
