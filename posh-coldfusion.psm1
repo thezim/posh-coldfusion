@@ -57,7 +57,7 @@ function Encrypt-Text {
     $keybytes = [System.Text.Encoding]::UTF8.GetBytes($Seed)
     
     # encrypt data
-    $aes = New-Object System.Security.Cryptography.RijndaelManaged
+    $aes = New-Object System.Security.Cryptography.AesCryptoServiceProvider
     $aes.Mode = [System.Security.Cryptography.CipherMode]::CBC
     $aes.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7
     $aes.BlockSize = $BlockSize
@@ -107,7 +107,7 @@ function Decrypt-Text {
     [Array]::Copy($encbytes, $size, $enc, 0, $enclen)
 
     # decrypt
-    $aes = New-Object System.Security.Cryptography.RijndaelManaged
+    $aes = New-Object System.Security.Cryptography.AesCryptoServiceProvider
     $aes.Mode = [System.Security.Cryptography.CipherMode]::CBC
     $aes.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7
     $aes.BlockSize = $BlockSize
