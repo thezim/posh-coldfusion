@@ -4,7 +4,7 @@
         [ValidateNotNullOrEmpty()]
         [string]$Path
     )
-    $lines = Get-Content -Path "C:\Users\Greg\Desktop\seed.properties"
+    $lines = Get-Content -Path $Path
     New-Object PSObject -Property @{
     Seed = ($lines |
         Where-Object { $_.StartsWith("seed") }) -split "=" | Select-Object -Last 1
