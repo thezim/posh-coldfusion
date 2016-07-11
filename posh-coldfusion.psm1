@@ -120,4 +120,25 @@ function Decrypt-Text {
     $sr = New-Object System.IO.StreamReader($cs)
     $sr.ReadToEnd()
 }
-Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources, Get-SeedInfo
+
+function Set-DataSourcePassword {
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullorEmpty()]
+        [System.Xml.XmlDocument]$Xml,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullorEmpty()]
+        [string]$DataSourceName,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullorEmpty()]
+        [string]$Password
+    )
+    $xpath = "/wddxPacket/data/array/struct/var[@name='$($DataSourceName)']/struct/var[@name='password']/string"
+    $node = $xdoc.SelectSingleNode($xpath)
+    if($node -eq $null){
+        throw("Data source not found.")
+    }
+    $node.'#text' = $Password
+    $Xml
+}
+Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources, Get-SeedInfo, Set-DataSourcePassword
