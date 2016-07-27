@@ -138,7 +138,7 @@ function Set-DataSourcePassword {
     if($node -eq $null){
         throw("Data source not found.")
     }
-    $node.'#text' = $Password
+    $node.InnerText = $Password
     $Xml
 }
 Export-ModuleMember -Function Encrypt-Text, Decrypt-Text, Get-DataSources, Get-SeedInfo, Set-DataSourcePassword
