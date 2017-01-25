@@ -4,7 +4,7 @@
 A PowerShell module for reading/writing Coldfusion data source passwords.
 
 ## Motivation
-I needed a way to both decrypt and encrypt ColdFusion data source passwords offline that did not require java and could be run remotely. This has only been written for AES-EBC mode encryption with Coldfusion 10. Your milage may vary with other versions.
+I needed a way to decrypt/encrypt ColdFusion data source passwords offline that did not require Java and could be run remotely. This has only been written for AES-EBC mode encryption mode and tested with Coldfusion 10. Your mileage may vary with other versions.
 
 ## Installation
 
