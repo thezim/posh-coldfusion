@@ -52,10 +52,10 @@ function Encrypt-Text {
         [int]$BlockSize=128,
         [int]$KeySize=128
     )
-    
+
     # get key btes
     $keybytes = [System.Text.Encoding]::UTF8.GetBytes($Seed)
-    
+
     # encrypt data
     $aes = New-Object System.Security.Cryptography.AesCryptoServiceProvider
     $aes.Mode = [System.Security.Cryptography.CipherMode]::CBC
@@ -134,7 +134,7 @@ function Set-DataSourcePassword {
         [string]$Password
     )
     $xpath = "/wddxPacket/data/array/struct/var[@name='$($DataSourceName)']/struct/var[@name='password']/string"
-    $node = $xdoc.SelectSingleNode($xpath)
+    $node = $Xml.SelectSingleNode($xpath)
     if($node -eq $null){
         throw("Data source not found.")
     }
